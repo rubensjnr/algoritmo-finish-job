@@ -95,7 +95,6 @@ void encontraCidade(struct cidade cd[], int codCidade, int &cod){
     getch();
 }
 
-
 void encontraApresentador(struct apresentador ap[], int codAp, int &cod){
     int i = 0, f = 10;
     int m = (i + f) / 2;
@@ -147,7 +146,6 @@ bool acrescentaParticipanteEvento(struct evento ev[], int codEv, struct cidade c
 	}
     getch();
 }
-
 
 //
 void leituraCidade(struct cidade x[], int &qtdCidades){
