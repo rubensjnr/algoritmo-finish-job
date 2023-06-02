@@ -1,9 +1,9 @@
-#include <iostream> // Aluno: Rubens da Cunha Junior
-#include <conio.h>  // R.A: 2211550375
-#include <stdlib.h> // Curso: Analise e Desenvolvimento de Sistemas
-#include <locale.h> // Ano: 2º - Turma 2 - Sala 13
-#include <string.h>
-#include <math.h>
+#include <iostream> ////////////////////////////////////////////////
+#include <conio.h>  // Aluno: Rubens da Cunha Junior
+#include <stdlib.h> // R.A: 2211550375
+#include <locale.h> // Curso: Analise e Desenvolvimento de Sistemas
+#include <string.h> // Ano: 2º - Turma 2 - Sala 13
+#include <math.h>	////////////////////////////////////////////////
 #include <cstring>
 #include <stdio.h>
 using namespace std;
@@ -12,19 +12,16 @@ struct cidade{
 	int codigo;
 	char nome[20], uf[2];
 };
-
 struct apresentador{
 	int codigo;
 	char nome[30];
 };
-
 struct evento{
 	int codigo, codCidade, codApresentador,
 	qtdParticipantes, limiteParticipantes;
 	float preco;
 	char descricao[30];
 };
-
 struct participante{
 	int codigo, codEvento = 0;
 	char nome[30];
@@ -38,11 +35,6 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador);
 void leituraEvento(struct evento ev[], struct cidade cd[], struct apresentador ap[], int &qtdEv);
 void leituraParticipante(struct participante part[], struct evento ev[], int &qtdParticipante, struct cidade cd[], struct apresentador ap[]);
 void menuPrincipal();
-
-
-//bool encontraCidade(struct cidade cd, int codCidade, int &cod);
-
-
 //
 int main(){
 	system("Color E0");
