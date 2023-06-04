@@ -8,6 +8,7 @@
 #include <stdio.h>
 using namespace std;
 
+//structs
 struct cidade{
 	int codigo;
 	char nome[20], uf[2];
@@ -26,7 +27,7 @@ struct participante{
 	int codigo, codEvento;
 	char nome[30];
 };
-//
+//inicialização
 bool encontraCidade(struct cidade cd[], int codCidade, int qtdCidades, int &cod);
 bool encontraApresentador(struct apresentador ap[], int codAp, int qtdAp, int &cod);
 bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struct cidade cid[], int qtdCidades, struct apresentador ap[], int qtdAp);
@@ -36,16 +37,21 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 void leituraParticipante(struct participante part[], struct evento ev[],int qtdEv, int &qtdParticipante, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
 void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
 void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
+void inserirNovoEvento(struct evento ev[], int qtdEventos, struct evento tr[], int qtdTransacao, struct evento at[],
+struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &att);
+void inserirNovoApresentador(struct apresentador ap[], int qtdAp, struct apresentador tr[], int qtdTr, struct apresentador att[], int &qtdAt);
+void atualizarTabelaInicialApresentador(struct apresentador ap[], int &qtdApresentador, struct apresentador att[], int qtdAtualizada);
+void atualizarTabelaEvento(struct evento ev[], int &qtdEventos, struct evento att[], int qtdAtualizada);
 void menuPrincipal();
-//
+//main
 int main(){
 	system("Color E0");
 	setlocale(LC_ALL,"Portuguese");
-	int qtdCidades, qtdApresentadores, qtdEventos, qtdParticipantes;
-	cidade cidades[3];
-	apresentador apresentadores[2];
-	evento eventos[2];
-	participante participantes[2];
+	int qtdCidades, qtdApresentadores, qtdEventos, qtdParticipantes, qtdEvTransacao, qtdEvAtualizada, qtdApTransacao, qtdApAtualizada;
+	cidade cidades[5];
+	apresentador apresentadores[5], tabelaApresentadoresTransacao[5], tabelaApresentadoresAtualizada[5];
+	evento eventos[5], tabelaEventoTransacao[5], tabelaEventoAtualizada[5];
+	participante participantes[5];
 	
 	char op;
 	for(int i = 0 ; i < op != -1 ; i++){
@@ -59,8 +65,14 @@ int main(){
 		case 4: { system("clear||cls");
 		leituraParticipante(participantes, eventos, qtdEventos, qtdParticipantes, cidades, qtdCidades, apresentadores, qtdApresentadores);
 		break; }
-		case 5: { system("clear||cls"); break; }
-		case 6: { system("clear||cls"); break; }
+		case 5: {system("clear||cls");
+				inserirNovoApresentador(apresentadores, qtdApresentadores, tabelaApresentadoresTransacao, qtdApTransacao,
+										tabelaApresentadoresAtualizada, qtdApAtualizada);
+				atualizarTabelaInicialApresentador(apresentadores, qtdApresentadores, tabelaApresentadoresAtualizada, qtdApAtualizada);
+				break;}
+		case 6: { system("clear||cls"); inserirNovoEvento(eventos, qtdEventos, tabelaEventoTransacao, qtdEvTransacao, tabelaEventoAtualizada,
+														  cidades, qtdCidades, apresentadores, qtdApresentadores, qtdEvAtualizada);
+										atualizarTabelaEvento(eventos, qtdEventos, tabelaEventoAtualizada, qtdEvAtualizada); break; }
 		case 7: { system("clear||cls"); consultarEvento(eventos, qtdEventos, cidades, qtdCidades, apresentadores, qtdApresentadores); break; }
 		case 8: { system("clear||cls"); mostrarTodosEventos(eventos, qtdEventos, cidades, qtdCidades, apresentadores, qtdApresentadores); break; }
   		case 9: { op = -1; return 0;  break; }
@@ -68,6 +80,7 @@ int main(){
 		}
 	}
 }
+//funções
 void menuPrincipal(){
 	system("clear||cls");
 	cout << "\n\t\tControle de Eventos FEMA - Trabalho de Algoritmo! \n\n";
@@ -138,12 +151,12 @@ bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struc
     		cout << "\n - Descrição: " << ev[m].descricao;
     		cout << "\n - Cidade: " << cid[x].nome;
     		cout << "\n - Apresentador: " << ap[y].nome;
-    		cout << "\n - Precço do convite: " << ev[m].preco;
+    		cout << "\n - Preço do convite: " << ev[m].preco;
     		cout << "\n=====================================\n";
     		return true ;
 		}
     	else {
-    		cout << "\nO número de vagas para esse evento foi esgotada";
+    		cout << "\nO número de vagas para esse evento foi esgotada\n";
     		return false ;
 		}
     }
@@ -152,8 +165,6 @@ bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struc
 		return false ;	
 	}
 }
-
-//
 void leituraCidade(struct cidade x[], int &qtdCidades){
 	int i = 0, t = 0;
 	char verificador[1];
@@ -192,7 +203,7 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador){
 	qtdApresentador = i;
 }
 void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &qtdEv){
-	int i = 0, t = 0, x, y;
+	int i = 0, t = 0, x = 0, y = 0;
 	char verificador[1];
 	bool z = false ;
 	for(; t == 0 ; i++){
@@ -236,22 +247,28 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 	}
 	qtdEv = i;
 }
-
 void leituraParticipante(struct participante part[], struct evento ev[],int qtdEv, int &qtdParticipante, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
 	int i = 0, t = 0;
 	char verificador[1];
 	for(; t==0 ; i++){
+		bool verificaExistenciaEvento = false;
 		system("clear||cls");
 		cout << "\t================================\n";
 		cout << "\t -- Cadastro de Participante --\n";
 		cout << "\t================================\n";
 		cout << "\nDigite o código do participante: "; cin >> part[i].codigo; cin.ignore();
 		cout << "\nDigite o nome do participante: "; gets(part[i].nome);
-		cout << "\nO participante ja optou por um evento? S/N: "; gets(verificador);
-		if (strcmp(verificador, "S") == 0 || strcmp(verificador, "s") == 0){
-        	cout << "Informe o código do evento de escolha do participante: "; cin >> part[i].codEvento; cin.ignore();
-			acrescentaParticipanteEvento(ev, qtdEv, part[i].codEvento, cd, qtdCidades, ap, qtdAp);
+        for(;verificaExistenciaEvento == false;){
+        	cout << "\nInforme o código do evento de escolha do participante: "; cin >> part[i].codEvento; cin.ignore();
+			verificaExistenciaEvento = acrescentaParticipanteEvento(ev, qtdEv, part[i].codEvento, cd, qtdCidades, ap, qtdAp);
+			if(!verificaExistenciaEvento){
+				cout << "\nDeseja escolher outro evento? S/N: "; gets(verificador);
+				if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
+	            verificaExistenciaEvento = true;
+	            system("clear||cls");
         }
+		}
+	}	
 		cout << "\nDeseja informar mais um participante? S/N: "; gets(verificador);
 			if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
             t++;
@@ -259,8 +276,6 @@ void leituraParticipante(struct participante part[], struct evento ev[],int qtdE
 	}
 	qtdParticipante = i;
 }
-
-
 void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
 	char verificador[1];
 	int codigoConsulta, t = 0;
@@ -269,7 +284,7 @@ void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int 
 		cout << "\t==========================\n";
 		cout << "\t -- Consulta de Evento --\n";
 		cout << "\t==========================\n";
-		cout << "\n\n - Digite o código do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
+		cout << "\n - Digite o código do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
 	    int i = 0, f = qtdEvento, x = 0, y = 0;
 	    int m = (i + f) / 2;
 	    for (; f >= i && codigoConsulta != ev[m].codigo; m = (i + f) / 2){
@@ -292,17 +307,17 @@ void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int 
 			cout << "\n\n- Preço unitario do convite: R$ " << ev[m].preco;
 			cout << "\n\n- Arrecadação: R$ " << (ev[m].qtdParticipantes*ev[m].preco);
 	    }
-	    else cout << "\nCódigo não encontrado!!!\n";
-	    cout << "\nDeseja consultar mais um evento? S/N: "; gets(verificador);
+	    else cout << "\n\nCódigo não encontrado!!!\n";
+	    cout << "\n\nDeseja consultar mais um evento? S/N: "; gets(verificador);
 	    if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
             t++;
         }
     }
 }
-
 void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
 	int codigoConsulta, t = 0;
 	for(;t==0;){
+		float valorTotalEventos = 0;
 		cout << "\t====================================\n";
 		cout << "\t -- Todos os Eventos Cadastrados! -- \n";
 		cout << "\t====================================\n";
@@ -317,20 +332,118 @@ void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], 
 			cout << "\n\n- Total de participantes: " << ev[i].qtdParticipantes;
 			cout << "\n\n- Preço unitario do convite: R$ " << ev[i].preco;
 			cout << "\n\n- Arrecadação: R$ " << (ev[i].qtdParticipantes*ev[i].preco);
-			cout << "\n====================================";
+			valorTotalEventos += (ev[i].qtdParticipantes*ev[i].preco);
+			cout << "\n=================================================================";
 		}
-	    cout << "\n\n\nPara voltar ao menu Inicial, pressione [V]\n";
+		cout << "\n\t- O valor total arrecadado de todos os eventos é: R$ " << valorTotalEventos;
+		cout << "\n=================================================================";
+	    cout << "\n\n\tPara voltar ao menu Inicial, pressione [V]\n";
 		char verificador = getch();
 	    if (verificador == 'v' || verificador == 'V'){
             t++;
         }
     }
 }
+void inserirNovoEvento(struct evento ev[], int qtdEventos, struct evento tr[], int qtdTransacao, struct evento at[],
+struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &att){
+	leituraEvento(tr, cd, qtdCidades, ap, qtdAp, qtdTransacao);
+    int i = 0, j = 0, k = 0;
+    for (;i < qtdEventos && j < qtdTransacao;k++){
+        if (ev[i].codigo < tr[j].codigo){
+            at[k].codigo = ev[i].codigo;
+            at[k].codCidade = ev[i].codCidade;
+            at[k].codApresentador = ev[i].codApresentador;
+            at[k].qtdParticipantes = ev[i].qtdParticipantes;
+            at[k].limiteParticipantes = ev[i].limiteParticipantes;
+            at[k].preco = ev[i].preco;
+            strcpy(at[k].descricao,ev[i].descricao);
+            i++;
+            }
+        else {
+            at[k].codigo = tr[j].codigo;
+            at[k].codCidade = tr[j].codCidade;
+            at[k].codApresentador = tr[j].codApresentador;
+            at[k].qtdParticipantes = tr[j].qtdParticipantes;
+            at[k].limiteParticipantes = tr[j].limiteParticipantes;
+            at[k].preco = tr[j].preco;
+            strcpy(at[k].descricao,tr[j].descricao);
+            j++;
+        }
+    }
+    while (i < qtdEventos){
+		at[k].codigo = ev[i].codigo;
+        at[k].codCidade = ev[i].codCidade;
+        at[k].codApresentador = ev[i].codApresentador;
+        at[k].qtdParticipantes = ev[i].qtdParticipantes;
+    	at[k].limiteParticipantes = ev[i].limiteParticipantes;
+        at[k].preco = ev[i].preco;
+        strcpy(at[k].descricao,ev[i].descricao);		
+        i++;
+        k++;
+    }
+    while (j < qtdTransacao){
+		at[k].codigo = tr[j].codigo;
+        at[k].codCidade = tr[j].codCidade;
+        at[k].codApresentador = tr[j].codApresentador;
+        at[k].qtdParticipantes = tr[j].qtdParticipantes;
+        at[k].limiteParticipantes = tr[j].limiteParticipantes;
+        at[k].preco = tr[j].preco;
+        strcpy(at[k].descricao,tr[j].descricao);
+        j++;
+        k++;
+    }
+    att = k;
+}
 
+void inserirNovoApresentador(struct apresentador ap[], int qtdAp, struct apresentador tr[], int qtdTr, struct apresentador att[], int &qtdAt){
+	leituraApresentador(tr, qtdTr);
+	int i = 0, j = 0, k = 0;
+    for (;i < qtdAp && j < qtdTr;k++){
+        if (ap[i].codigo < tr[j].codigo){
+            att[k].codigo = ap[i].codigo;
+            strcpy(att[k].nome,ap[i].nome);
+            i++;
+            }
+        else {
+            att[k].codigo = tr[j].codigo;
+            strcpy (att[k].nome,tr[j].nome);
+            j++;
+        }
+    }
+    while (i < qtdAp){
+        att[k].codigo = ap[i].codigo;
+        strcpy(att[k].nome,ap[i].nome);
+        i++;
+        k++;
+    }
+    while (j < qtdTr){
+        att[k].codigo = tr[j].codigo;
+        strcpy(att[k].nome,tr[j].nome);
+        j++;
+        k++;
+    }
+    qtdAt = k;
+}
 
+void atualizarTabelaInicialApresentador(struct apresentador ap[], int &qtdApresentador, struct apresentador att[], int qtdAtualizada){
+	qtdApresentador = qtdAtualizada;
+	for(int i = 0 ; i < qtdApresentador ; i++ ){
+		ap[i].codigo = att[i].codigo;
+		strcpy(ap[i].nome,att[i].nome);
+	}
+}
 
-
-
-
+void atualizarTabelaEvento(struct evento ev[], int &qtdEventos, struct evento att[], int qtdAtualizada){
+	qtdEventos = qtdAtualizada;
+	for(int i = 0 ; i < qtdEventos ; i++){
+		ev[i].codigo = att[i].codigo;
+		ev[i].codCidade = att[i].codCidade;
+		ev[i].codApresentador = att[i].codApresentador;
+		ev[i].qtdParticipantes = att[i].qtdParticipantes;
+		ev[i].limiteParticipantes = att[i].limiteParticipantes;
+		ev[i].preco = att[i].preco;
+		strcpy(ev[i].descricao,att[i].descricao);
+	}
+}
 
 
