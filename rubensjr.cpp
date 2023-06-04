@@ -77,8 +77,8 @@ void menuPrincipal(){
 	cout << "\n\t8 - Ver todos os eventos.\n";
 	cout << "\n\n\t9- Sai/Exit.\n\n";
 }
-bool encontraCidade(struct cidade cd[], int codCidade, int &cod, bool teste){
-    int i = 0, f = 10;
+bool encontraCidade(struct cidade cd[], int codCidade, int &cod){
+    int i = 0, f = sizeof(cd)/sizeof(cd[0]);
     int m = (i + f) / 2;
     for (; f >= i && codCidade != cd[m].codigo; m = (i + f) / 2){
         if (codCidade > cd[m].codigo)
@@ -87,14 +87,11 @@ bool encontraCidade(struct cidade cd[], int codCidade, int &cod, bool teste){
             f = m - 1;
     }
     if (codCidade == cd[m].codigo){
-    		cod = m;
-    		teste = true;
-    		return teste;
+    	cod = m;
+    	return true;
     }
     else {
-    	cout << "\n Cidade não Encontrada!\n";
-    	teste = false;
-    	return teste;
+    	return false;
 	}
 }
 
@@ -188,12 +185,17 @@ void leituraEvento(struct evento ev[], struct cidade cd[], struct apresentador a
 		cout << "Digite um número de código para o evento: "; cin >> ev[i].codigo; cin.ignore();
 		cout << "Digite uma descrição do evento: "; gets(ev[i].descricao);
 	
-		for(int j = 0 ; z == false ; j++){
+		for(int j = 0 ; z == false; j++){
 			cout << "Informe o código da cidade aonde ocorrerá o evento: "; cin >> ev[i].codCidade; cin.ignore();
-			encontraCidade(cd, ev[i].codCidade, x, z);
+			z = encontraCidade(cd, ev[i].codCidade, x);
+			if(z){
+				cout << "\nCidade: " << cd[x].nome;
+				cout << "\nUF: " << cd[x].uf;
+				cout << "\nX: " << x;
+			} else cout << "\nCidade não encontrata!\n";
 		}
 		
-		cout << "Informe o código do apresentador do evento: "; cin >> ev[i].codApresentador; cin.ignore();
+		cout << "\nInforme o código do apresentador do evento: "; cin >> ev[i].codApresentador; cin.ignore();
 		
 	    encontraApresentador(ap, ev[i].codApresentador, y); //falta fazer um loop para pedir novamente a instrução
 		
