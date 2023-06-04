@@ -35,6 +35,7 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador);
 void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &qtdEv);
 void leituraParticipante(struct participante part[], struct evento ev[],int qtdEv, int &qtdParticipante, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
 void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
+void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
 void menuPrincipal();
 //
 int main(){
@@ -61,7 +62,7 @@ int main(){
 		case 5: { system("clear||cls"); break; }
 		case 6: { system("clear||cls"); break; }
 		case 7: { system("clear||cls"); consultarEvento(eventos, qtdEventos, cidades, qtdCidades, apresentadores, qtdApresentadores); break; }
-		case 8: { system("clear||cls"); break; }
+		case 8: { system("clear||cls"); mostrarTodosEventos(eventos, qtdEventos, cidades, qtdCidades, apresentadores, qtdApresentadores); break; }
   		case 9: { op = -1; return 0;  break; }
 		default : { cout << "\n\nOpcao invalida. Tecle algo para continuar..."; getch(); }
 		}
@@ -158,9 +159,12 @@ void leituraCidade(struct cidade x[], int &qtdCidades){
 	char verificador[1];
 	for(; t == 0; i++){
 		system("clear||cls");
-		cout << "Digite o codigo da cidade: "; cin >> x[i].codigo; cin.ignore();
-		cout << "Digite o nome da cidade: "; gets(x[i].nome);
-		cout << "Digite a UF do municipio: "; gets(x[i].uf);
+		cout << "\t==========================\n";
+		cout << "\t -- Cadastro de Cidade --\n";
+		cout << "\t==========================\n";
+		cout << "\nDigite o codigo da cidade: "; cin >> x[i].codigo; cin.ignore();
+		cout << "\nDigite o nome da cidade: "; gets(x[i].nome);
+		cout << "\nDigite a UF do municipio: "; gets(x[i].uf);
 		cout << "\nDeseja informar mais uma cidade? S/N: "; cin >> verificador; cin.ignore();
 		cout << "\n";
         if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
@@ -175,8 +179,11 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador){
 	char verificador[1];
 	for(; t == 0 ; i++){
 		system("clear||cls");
-		cout << "Digite o codigo do apresentador: "; cin >> x[i].codigo; cin.ignore();
-		cout << "Digite o nome do apresentador: "; gets(x[i].nome);
+		cout << "\t================================\n";
+		cout << "\t -- Cadastro de Apresentador --\n";
+		cout << "\t================================\n";
+		cout << "\nDigite o codigo do apresentador: "; cin >> x[i].codigo; cin.ignore();
+		cout << "\nDigite o nome do apresentador: "; gets(x[i].nome);
 		cout << "\nDeseja informar mais um apresentador? S/N: "; cin >> verificador; cin.ignore();
 		if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
             t++;
@@ -190,7 +197,10 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 	bool z = false ;
 	for(; t == 0 ; i++){
 		system("clear||cls");
-		cout << " - Digite um número de código para o evento: "; cin >> ev[i].codigo; cin.ignore();
+		cout << "\t==========================\n";
+		cout << "\t -- Cadastro de Evento --\n";
+		cout << "\t==========================\n";
+		cout << "\n - Digite um número de código para o evento: "; cin >> ev[i].codigo; cin.ignore();
 		cout << "\n - Digite uma descrição do evento: "; gets(ev[i].descricao);
 		bool z = false ;
 		for(int j = 0 ; z == false ; j++){
@@ -201,7 +211,7 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 				cout << "\n==============================\n";
 				cout << "> Cidade: " << cd[x].nome;
 				cout << "\n> UF: " << cd[x].uf;
-				cout << "\n==============================\n";
+				cout << "\n==============================";
 			} else cout << "\nCidade não encontrata!\n ";
 		}
 		z = false;
@@ -212,7 +222,7 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 	    	if (z) {
 	    		cout << "\n==============================\n";
 	    		cout << "> Apresentador: " << ap[y].nome;
-	    		cout << "\n==============================\n";
+	    		cout << "\n==============================";
 			}
 			else cout << "\n Apresentador não Encontrado!\n";
 		}
@@ -232,9 +242,12 @@ void leituraParticipante(struct participante part[], struct evento ev[],int qtdE
 	char verificador[1];
 	for(; t==0 ; i++){
 		system("clear||cls");
-		cout << "Digite o código do participante: "; cin >> part[i].codigo; cin.ignore();
-		cout << "Digite o nome do participante: "; gets(part[i].nome);
-		cout << "O participante ja optou por um evento? S/N: "; gets(verificador);
+		cout << "\t================================\n";
+		cout << "\t -- Cadastro de Participante --\n";
+		cout << "\t================================\n";
+		cout << "\nDigite o código do participante: "; cin >> part[i].codigo; cin.ignore();
+		cout << "\nDigite o nome do participante: "; gets(part[i].nome);
+		cout << "\nO participante ja optou por um evento? S/N: "; gets(verificador);
 		if (strcmp(verificador, "S") == 0 || strcmp(verificador, "s") == 0){
         	cout << "Informe o código do evento de escolha do participante: "; cin >> part[i].codEvento; cin.ignore();
 			acrescentaParticipanteEvento(ev, qtdEv, part[i].codEvento, cd, qtdCidades, ap, qtdAp);
@@ -250,11 +263,13 @@ void leituraParticipante(struct participante part[], struct evento ev[],int qtdE
 
 void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
 	char verificador[1];
-	int codigoConsulta;
-	int t = 0;
+	int codigoConsulta, t = 0;
 	for(;t == 0;){
-		cout << "\n - Digite o código do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
-		
+		system("clear||cls");
+		cout << "\t==========================\n";
+		cout << "\t -- Consulta de Evento --\n";
+		cout << "\t==========================\n";
+		cout << "\n\n - Digite o código do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
 	    int i = 0, f = qtdEvento, x = 0, y = 0;
 	    int m = (i + f) / 2;
 	    for (; f >= i && codigoConsulta != ev[m].codigo; m = (i + f) / 2){
@@ -264,22 +279,49 @@ void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int 
 	            f = m - 1;
 	    }
 	    if (codigoConsulta == ev[m].codigo){
-	    	cout << "\n============================\n";
-			cout << " -- Evento encontrado! --";
-			cout << "\n============================\n";
-			cout << "Código do evento: " << ev[m].codigo;
-			cout << "\nDescrição: " << ev[m].descricao;
+	    	cout << "==========================\n";
+			cout << " -- Evento encontrado! --\n";
+			cout << "==========================\n";
+			cout << "\n- Código do evento: " << ev[m].codigo;
+			cout << "\n\n- Descrição: " << ev[m].descricao;
 			encontraCidade(cd, ev[m].codCidade, qtdCidades, x);
-			cout << "\nCidade:" << cd[x].nome;
+			cout << "\n\n- Cidade:" << cd[x].nome;
 			encontraApresentador(ap, ev[m].codApresentador, qtdAp, y);
-			cout << "\nApresentador: " << ap[y].nome;
-			cout << "\nTotal de participantes: " << ev[m].qtdParticipantes;
-			cout << "\nPreço unitario do convite: R$ " << ev[m].preco;
-			cout << "\nArrecadação: R$ " << (ev[m].qtdParticipantes*ev[m].preco);
+			cout << "\n\n- Apresentador: " << ap[y].nome;
+			cout << "\n\n- Total de participantes: " << ev[m].qtdParticipantes;
+			cout << "\n\n- Preço unitario do convite: R$ " << ev[m].preco;
+			cout << "\n\n- Arrecadação: R$ " << (ev[m].qtdParticipantes*ev[m].preco);
 	    }
 	    else cout << "\nCódigo não encontrado!!!\n";
 	    cout << "\nDeseja consultar mais um evento? S/N: "; gets(verificador);
 	    if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
+            t++;
+        }
+    }
+}
+
+void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
+	int codigoConsulta, t = 0;
+	for(;t==0;){
+		cout << "\t====================================\n";
+		cout << "\t -- Todos os Eventos Cadastrados! -- \n";
+		cout << "\t====================================\n";
+		for (int i = 0 ; i < qtdEvento ; i++){
+			int x,y;	
+			cout << "\n- Código do evento: " << ev[i].codigo;
+			cout << "\n\n- Descrição: " << ev[i].descricao;
+			encontraCidade(cd, ev[i].codCidade, qtdCidades, x);
+			cout << "\n\n- Cidade:" << cd[x].nome;
+			encontraApresentador(ap, ev[i].codApresentador, qtdAp, y);
+			cout << "\n\n- Apresentador: " << ap[y].nome;
+			cout << "\n\n- Total de participantes: " << ev[i].qtdParticipantes;
+			cout << "\n\n- Preço unitario do convite: R$ " << ev[i].preco;
+			cout << "\n\n- Arrecadação: R$ " << (ev[i].qtdParticipantes*ev[i].preco);
+			cout << "\n====================================";
+		}
+	    cout << "\n\n\nPara voltar ao menu Inicial, pressione [V]\n";
+		char verificador = getch();
+	    if (verificador == 'v' || verificador == 'V'){
             t++;
         }
     }
