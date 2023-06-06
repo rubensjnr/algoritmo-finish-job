@@ -112,7 +112,6 @@ bool encontraCidade(struct cidade cd[], int codCidade, int qtdCidades, int &cod)
     	return false;
 	}
 }
-
 bool encontraApresentador(struct apresentador ap[], int codAp, int qtdAp, int &cod){
     int i = 0, f = qtdAp;
     int m = (i + f) / 2;
@@ -450,5 +449,5 @@ void atualizarTabelaEvento(struct evento ev[], int &qtdEventos, struct evento at
 		strcpy(ev[i].descricao,att[i].descricao);
 	}
 }
-
+//finish
 
