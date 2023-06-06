@@ -31,8 +31,8 @@ struct participante{
 bool encontraCidade(struct cidade cd[], int codCidade, int qtdCidades, int &cod);
 bool encontraApresentador(struct apresentador ap[], int codAp, int qtdAp, int &cod);
 bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struct cidade cid[], int qtdCidades, struct apresentador ap[], int qtdAp);
-void leituraCidade(struct cidade x[], int &qtdCidades);
-void leituraApresentador(struct apresentador x[], int &qtdApresentador);
+void leituraCidade(struct cidade cd[], int &qtdCidades);
+void leituraApresentador(struct apresentador ap[], int &qtdApresentador);
 void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &qtdEv);
 void leituraParticipante(struct participante part[], struct evento ev[],int qtdEv, int &qtdParticipante, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
 void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp);
@@ -53,6 +53,7 @@ int main(){
 	evento eventos[5], tabelaEventoTransacao[5], tabelaEventoAtualizada[5];
 	participante participantes[5];
 	
+	//menu
 	char op;
 	for(int i = 0 ; i < op != -1 ; i++){
 	menuPrincipal();
@@ -165,7 +166,8 @@ bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struc
 		return false ;	
 	}
 }
-void leituraCidade(struct cidade x[], int &qtdCidades){
+void leituraCidade(struct cidade cd[], int &qtdCidades){
+	// fazer a leitura do x e verificar se já existe algum dado inserido.
 	int i = 0, t = 0;
 	char verificador[1];
 	for(; t == 0; i++){
@@ -173,9 +175,9 @@ void leituraCidade(struct cidade x[], int &qtdCidades){
 		cout << "\t==========================\n";
 		cout << "\t -- Cadastro de Cidade --\n";
 		cout << "\t==========================\n";
-		cout << "\nDigite o codigo da cidade: "; cin >> x[i].codigo; cin.ignore();
-		cout << "\nDigite o nome da cidade: "; gets(x[i].nome);
-		cout << "\nDigite a UF do municipio: "; gets(x[i].uf);
+		cout << "\nDigite o codigo da cidade: "; cin >> cd[i].codigo; cin.ignore();
+		cout << "\nDigite o nome da cidade: "; gets(cd[i].nome);
+		cout << "\nDigite a UF do municipio: "; gets(cd[i].uf);
 		cout << "\nDeseja informar mais uma cidade? S/N: "; cin >> verificador; cin.ignore();
 		cout << "\n";
         if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
@@ -185,7 +187,8 @@ void leituraCidade(struct cidade x[], int &qtdCidades){
 	}
 	qtdCidades = i;
 }
-void leituraApresentador(struct apresentador x[], int &qtdApresentador){
+void leituraApresentador(struct apresentador ap[], int &qtdApresentador){
+	// fazer a leitura do x e verificar se já existe algum dado inserido.
 	int i = 0, t = 0;
 	char verificador[1];
 	for(; t == 0 ; i++){
@@ -193,8 +196,8 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador){
 		cout << "\t================================\n";
 		cout << "\t -- Cadastro de Apresentador --\n";
 		cout << "\t================================\n";
-		cout << "\nDigite o codigo do apresentador: "; cin >> x[i].codigo; cin.ignore();
-		cout << "\nDigite o nome do apresentador: "; gets(x[i].nome);
+		cout << "\nDigite o codigo do apresentador: "; cin >> ap[i].codigo; cin.ignore();
+		cout << "\nDigite o nome do apresentador: "; gets(ap[i].nome);
 		cout << "\nDeseja informar mais um apresentador? S/N: "; cin >> verificador; cin.ignore();
 		if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
             t++;
@@ -203,6 +206,7 @@ void leituraApresentador(struct apresentador x[], int &qtdApresentador){
 	qtdApresentador = i;
 }
 void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp, int &qtdEv){
+	// fazer a leitura do ev e verificar se já existe algum dado inserido.
 	int i = 0, t = 0, x = 0, y = 0;
 	char verificador[1];
 	bool z = false ;
@@ -248,6 +252,7 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 	qtdEv = i;
 }
 void leituraParticipante(struct participante part[], struct evento ev[],int qtdEv, int &qtdParticipante, struct cidade cd[], int qtdCidades, struct apresentador ap[], int qtdAp){
+		// fazer a leitura do part e verificar se já existe algum dado inserido.
 	int i = 0, t = 0;
 	char verificador[1];
 	for(; t==0 ; i++){
