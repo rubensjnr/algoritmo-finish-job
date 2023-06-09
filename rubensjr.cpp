@@ -46,6 +46,7 @@ void menuPrincipal();
 int main(){
 	system("Color E0");
 	setlocale(LC_ALL,"Portuguese");
+	//var
 	int qtdCidades, qtdApresentadores, qtdEventos, qtdParticipantes, qtdEvTransacao, qtdEvAtualizada, qtdApTransacao, qtdApAtualizada;
 	cidade cidades[100];
 	apresentador apresentadores[100], tabelaApresentadoresTransacao[100], tabelaApresentadoresAtualizada[100];
