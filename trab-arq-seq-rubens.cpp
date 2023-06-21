@@ -2,8 +2,8 @@
 #include <conio.h>  // Aluno: Rubens da Cunha Junior
 #include <stdlib.h> // R.A: 2211550375
 #include <locale.h> // Curso: Analise e Desenvolvimento de Sistemas
-#include <string.h> // Ano: 2º - Turma 2 - Sala 13
-#include <math.h>	////////////////////////////////////////////////
+#include <string.h> // Ano: 2Âº - Turma 2 - Sala 13
+#include <math.h>   ////////////////////////////////////////////////
 #include <cstring>
 #include <stdio.h>
 using namespace std;
@@ -26,7 +26,7 @@ struct participante{
 	int codigo, codEvento;
 	char nome[30];
 };
-//prototipação
+//prototipaÃ§Ã£o
 bool encontraCidade(struct cidade cd[], int codCidade, int qtdCidades, int &cod);
 bool encontraApresentador(struct apresentador ap[], int codAp, int qtdAp, int &cod);
 bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struct cidade cid[], int qtdCidades, struct apresentador ap[], int qtdAp);
@@ -80,7 +80,7 @@ int main(){
 		}
 	}
 }
-//funções
+//funÃ§Ãµes
 void menuPrincipal(){
 	system("clear||cls");
 	cout << "\n\t\tControle de Eventos FEMA - Trabalho de Algoritmo! \n\n";
@@ -144,23 +144,23 @@ bool acrescentaParticipanteEvento(struct evento ev[],int qtdEv, int codEv, struc
     	if (ev[m].qtdParticipantes < ev[m].limiteParticipantes){
     		ev[m].qtdParticipantes++;
     		cout << "\n=====================================\n";
-    		cout << "\nIncrição de participante concluida!!!\n";
+    		cout << "\nIncriÃ§Ã£o de participante concluida!!!\n";
     		cout << "\n=====================================\n";
     		cout << " - Segue detalhes do evento abaixo: ";
-    		cout << "\n - Descrição: " << ev[m].descricao;
+    		cout << "\n - DescriÃ§Ã£o: " << ev[m].descricao;
     		cout << "\n - Cidade: " << cid[indiceCidade].nome;
     		cout << "\n - Apresentador: " << ap[indiceApresentador].nome;
-    		cout << "\n - Preço do convite: " << ev[m].preco;
+    		cout << "\n - PreÃ§o do convite: " << ev[m].preco;
     		cout << "\n=====================================\n";
     		return true ;
 		}
     	else {
-    		cout << "\nO número de vagas para esse evento foi esgotada\n";
+    		cout << "\nO nÃºmero de vagas para esse evento foi esgotada\n";
     		return false ;
 		}
     }
     else {
-		cout << "\n Evento não Encontrado!\n";
+		cout << "\n Evento nÃ£o Encontrado!\n";
 		return false ;	
 	}
 }
@@ -179,7 +179,7 @@ void leituraCidade(struct cidade cd[], int &qtdCidades){
         	for (int j = 0; j < i ; j++) 
            		if (cd[i].codigo == cd[j].codigo) {
                		verificadorDeCodigoCidade = false;
-               		cout << "\nCodigo de cidade invalido ou já informado!!!\n";
+               		cout << "\nCodigo de cidade invalido ou jÃ¡ informado!!!\n";
 					cout << "\nPressione uma tecla para inserir outro codigo...\n"; cin.get();
                		break; 
        	    	}
@@ -209,7 +209,7 @@ void leituraApresentador(struct apresentador ap[], int &qtdApresentador){
 		for (int j = 0; j < i; j++) 
             if (ap[i].codigo == ap[j].codigo) {
                 verificadorDeCodigoApresentador = false;
-                cout << "\nCodigo de apresentador já informado!!!\n";
+                cout << "\nCodigo de apresentador jÃ¡ informado!!!\n";
 				cout << "\nPressione uma tecla para inserir outro codigo...\n"; getch();
                 break; 
         	}
@@ -232,43 +232,43 @@ void leituraEvento(struct evento ev[], struct cidade cd[], int qtdCidades, struc
 		cout << "\t==========================\n";
 		cout << "\t -- Cadastro de Evento --\n";
 		cout << "\t==========================\n";
-		cout << "\n - Digite um número de código para o evento: "; cin >> ev[i].codigo; cin.ignore();
+		cout << "\n - Digite um nÃºmero de cÃ³digo para o evento: "; cin >> ev[i].codigo; cin.ignore();
 		verificadorDeCodigoEvento = true;
 		for (int j = 0; j < i; j++) 
             if (ev[i].codigo == ev[j].codigo) {
                 verificadorDeCodigoEvento = false;
-                cout << "\nCodigo de evento já informado!!!\n";
+                cout << "\nCodigo de evento jÃ¡ informado!!!\n";
 				cout << "\nPressione uma tecla para inserir outro codigo...\n"; getch();
                 break; 
         	}
     	}
-		cout << "\n - Digite uma descrição do evento: "; gets(ev[i].descricao);
+		cout << "\n - Digite uma descriÃ§Ã£o do evento: "; gets(ev[i].descricao);
 		bool verificadorDeBusca = false ;
 		for(int j = 0 ; verificadorDeBusca == false ; j++){
 			if (j == 5 ) system("clear||cls");
-			cout << "\n - Informe o código da cidade aonde ocorrerá o evento: "; cin >> ev[i].codCidade; cin.ignore();
+			cout << "\n - Informe o cÃ³digo da cidade aonde ocorrerÃ¡ o evento: "; cin >> ev[i].codCidade; cin.ignore();
 			verificadorDeBusca = encontraCidade(cd, ev[i].codCidade, qtdCidades, numIndexCidade);
 			if(verificadorDeBusca){
 				cout << "\n==============================\n";
 				cout << "- Cidade: " << cd[numIndexCidade].nome;
 				cout << "\n- UF: " << cd[numIndexCidade].uf;
 				cout << "\n==============================";
-			} else cout << "\nCidade não encontrata!\n ";
+			} else cout << "\nCidade nÃ£o encontrata!\n ";
 		}
 		verificadorDeBusca = false;
 		for(int j = 0 ; verificadorDeBusca == false ; j++){
 			if (j == 5) system("clear||cls");
-			cout << "\n\n - Informe o código do apresentador do evento: "; cin >> ev[i].codApresentador; cin.ignore();
+			cout << "\n\n - Informe o cÃ³digo do apresentador do evento: "; cin >> ev[i].codApresentador; cin.ignore();
 	    	verificadorDeBusca = encontraApresentador(ap, ev[i].codApresentador, qtdAp, numIndexApresentador);
 	    	if (verificadorDeBusca) {
 	    		cout << "\n==============================\n";
 	    		cout << "- Apresentador: " << ap[numIndexApresentador].nome;
 	    		cout << "\n==============================";
 			}
-			else cout << "\n Apresentador não Encontrado!\n";
+			else cout << "\n Apresentador nÃ£o Encontrado!\n";
 		}
 		cout << "\n\n - Informe o limite de participantes do evento: "; cin >> ev[i].limiteParticipantes; cin.ignore();
-		cout << "\n - Informe o preço do convite unitário do evento: "; cin >> ev[i].preco; cin.ignore();
+		cout << "\n - Informe o preÃ§o do convite unitÃ¡rio do evento: "; cin >> ev[i].preco; cin.ignore();
 		cout << "\n - Deseja informar mais um evento? S/N: "; cin >> verificador; cin.ignore();
 		
 		if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
@@ -288,19 +288,19 @@ void leituraParticipante(struct participante part[], struct evento ev[],int qtdE
 		cout << "\t================================\n";
 		cout << "\t -- Cadastro de Participante --\n";
 		cout << "\t================================\n";
-		cout << "\nDigite o código do participante: "; cin >> part[i].codigo; cin.ignore();
+		cout << "\nDigite o cÃ³digo do participante: "; cin >> part[i].codigo; cin.ignore();
 		verificadorDeCodigoParticipante = true;
 		for (int j = 0; j < i; j++) 
             if (part[i].codigo == part[j].codigo) {
                 verificadorDeCodigoParticipante = false;
-                cout << "\nCodigo de participante já informado!!!\n";
+                cout << "\nCodigo de participante jÃ¡ informado!!!\n";
 				cout << "\nPressione uma tecla para inserir outro codigo...\n"; getch();
                 break; 
         	}
     	}
 		cout << "\nDigite o nome do participante: "; gets(part[i].nome);
         for(;verificaExistenciaEvento == false;){
-        	cout << "\nInforme o código do evento de escolha do participante: "; cin >> part[i].codEvento; cin.ignore();
+        	cout << "\nInforme o cÃ³digo do evento de escolha do participante: "; cin >> part[i].codEvento; cin.ignore();
 			verificaExistenciaEvento = acrescentaParticipanteEvento(ev, qtdEv, part[i].codEvento, cd, qtdCidades, ap, qtdAp);
 			if(!verificaExistenciaEvento){
 				cout << "\nDeseja escolher outro evento? S/N: "; gets(verificador);
@@ -325,7 +325,7 @@ void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int 
 		cout << "\t==========================\n";
 		cout << "\t -- Consulta de Evento --\n";
 		cout << "\t==========================\n";
-		cout << "\n - Digite o código do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
+		cout << "\n - Digite o cÃ³digo do evento para consulta: "; cin >> codigoConsulta; cin.ignore();
 	    int i = 0, f = qtdEvento, x = 0, y = 0;
 	    int m = (i + f) / 2;
 	    for (; f >= i && codigoConsulta != ev[m].codigo; m = (i + f) / 2){
@@ -338,17 +338,17 @@ void consultarEvento(struct evento ev[], int qtdEvento, struct cidade cd[], int 
 	    	cout << "==========================\n";
 			cout << " -- Evento encontrado! --\n";
 			cout << "==========================\n";
-			cout << "\n- Código do evento: " << ev[m].codigo;
-			cout << "\n\n- Descrição: " << ev[m].descricao;
+			cout << "\n- CÃ³digo do evento: " << ev[m].codigo;
+			cout << "\n\n- DescriÃ§Ã£o: " << ev[m].descricao;
 			encontraCidade(cd, ev[m].codCidade, qtdCidades, x);
 			cout << "\n\n- Cidade:" << cd[x].nome;
 			encontraApresentador(ap, ev[m].codApresentador, qtdAp, y);
 			cout << "\n\n- Apresentador: " << ap[y].nome;
 			cout << "\n\n- Total de participantes: " << ev[m].qtdParticipantes;
-			cout << "\n\n- Preço unitario do convite: R$ " << ev[m].preco;
-			cout << "\n\n- Arrecadação: R$ " << (ev[m].qtdParticipantes*ev[m].preco);
+			cout << "\n\n- PreÃ§o unitario do convite: R$ " << ev[m].preco;
+			cout << "\n\n- ArrecadaÃ§Ã£o: R$ " << (ev[m].qtdParticipantes*ev[m].preco);
 	    }
-	    else cout << "\n\nCódigo não encontrado!!!\n";
+	    else cout << "\n\nCÃ³digo nÃ£o encontrado!!!\n";
 	    cout << "\n\nDeseja consultar mais um evento? S/N: "; gets(verificador);
 	    if (strcmp(verificador, "n") == 0 || strcmp(verificador, "N") == 0){
             t++;
@@ -364,19 +364,19 @@ void mostrarTodosEventos(struct evento ev[], int qtdEvento, struct cidade cd[], 
 		cout << "\t====================================\n";
 		for (int i = 0 ; i < qtdEvento ; i++){
 			int x,y;	
-			cout << "\n- Código do evento: " << ev[i].codigo;
-			cout << "\n\n- Descrição: " << ev[i].descricao;
+			cout << "\n- CÃ³digo do evento: " << ev[i].codigo;
+			cout << "\n\n- DescriÃ§Ã£o: " << ev[i].descricao;
 			encontraCidade(cd, ev[i].codCidade, qtdCidades, x);
 			cout << "\n\n- Cidade:" << cd[x].nome;
 			encontraApresentador(ap, ev[i].codApresentador, qtdAp, y);
 			cout << "\n\n- Apresentador: " << ap[y].nome;
 			cout << "\n\n- Total de participantes: " << ev[i].qtdParticipantes;
-			cout << "\n\n- Preço unitario do convite: R$ " << ev[i].preco;
-			cout << "\n\n- Arrecadação: R$ " << (ev[i].qtdParticipantes*ev[i].preco);
+			cout << "\n\n- PreÃ§o unitario do convite: R$ " << ev[i].preco;
+			cout << "\n\n- ArrecadaÃ§Ã£o: R$ " << (ev[i].qtdParticipantes*ev[i].preco);
 			valorTotalEventos += (ev[i].qtdParticipantes*ev[i].preco);
 			cout << "\n=================================================================";
 		}
-		cout << "\n\t- O valor total arrecadado de todos os eventos é: R$ " << valorTotalEventos;
+		cout << "\n\t- O valor total arrecadado de todos os eventos Ã©: R$ " << valorTotalEventos;
 		cout << "\n=================================================================";
 	    cout << "\n\n\tPara voltar ao menu Inicial, pressione [V]\n";
 		char verificador = getch();
